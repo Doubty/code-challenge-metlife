@@ -85,7 +85,6 @@ export default function CustomizedDialogs({
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        maxWidth="xl"
       >
 
         <DialogTitle id="scroll-dialog-title" sx={{ backgroundColor: "#2ecc71", color: "white", textTransform: "uppercase" }}>{character.name}</DialogTitle>

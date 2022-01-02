@@ -1,0 +1,13 @@
+.headerContent {
+  max-width: 100%;
+  background-color: #2ecc71 !important;
+  text-align: center;
+  padding: 25px;
+  color: white;
+  font-size: 3em;
+  margin-bottom: 5rem;
+  cursor: pointer;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
