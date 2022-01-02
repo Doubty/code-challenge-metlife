@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchCharacters } from "../../store/reducers/characters/ActionCreator";
 import { characterSlice } from "../../store/reducers/characters/CharacterSlice";
 import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -50,17 +49,17 @@ function MainScreen() {
         <br />
       </Grid>
 
-      <Grid container xs={12} md={12}>
+      <Grid container xs={12} md={12}>  
         {isLoading && (
           <Grid item xs={12} md={12} className="ContainerLoading">
-            <CircularProgress />
-            <h3> Carregando...</h3>
+            <CircularProgress sx={{ color: "white" }} />
+            <h3 className="loadingText"> Carregando...</h3>
           </Grid>
         )}
         {error && <h3> Ops... tivemos um problema ao carregar a listagem</h3>}
         {!isLoading &&
           characters.map((character) => (
-            <Grid item xs={12} md={3} sx={{ marginTop: "2rem" }}>
+            <Grid item xs={12} md={3} sx={{ marginTop: "2rem" }} spacing={3}>
               <CardCharacter character={character} />
             </Grid>
           ))}

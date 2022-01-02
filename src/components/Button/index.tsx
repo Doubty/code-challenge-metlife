@@ -12,10 +12,10 @@ const ButtonRoot = React.forwardRef(function ButtonRoot(
   const { children, ...other } = props;
 
   return (
-    <svg width="300" height="50" {...other} ref={ref}>
+    <svg width="330" height="50" {...other} ref={ref}>
       <polygon points="0,50 0,0 330,0 330,50" className="bg" />
       <polygon points="0,50 0,0 330,0 330,50" className="borderEffect" />
-      <foreignObject x="0" y="0" width="300" height="50">
+      <foreignObject x="0" y="0" width="330" height="50">
         <div className="content">{children}</div>
       </foreignObject>
     </svg>
@@ -29,16 +29,8 @@ const CustomButtonRoot = styled(ButtonRoot)(
   --main-color: ${
     theme.palette.mode === "light" ? "rgb(25,118,210)" : "rgb(144,202,249)"
   };
-  --hover-color: ${
-    theme.palette.mode === "light"
-      ? "rgba(25,118,210,0.04)"
-      : "rgba(144,202,249,0.08)"
-  };
-  --active-color: ${
-    theme.palette.mode === "light"
-      ? "rgba(25,118,210,0.12)"
-      : "rgba(144,202,249,0.24)"
-  };
+  --hover-color: ${theme.palette.mode === "light" ? "#2ecc71" : "#1abc9c"};
+  --active-color: ${theme.palette.mode === "light" ? "#1abc9c" : "#1abc9c"};
 
   & polygon {
     fill: transparent;
@@ -47,14 +39,15 @@ const CustomButtonRoot = styled(ButtonRoot)(
   }
   
   & .bg {
-    stroke: var(--main-color);
-    stroke-width: 0.5;
+    stroke: #2ecc71;
+    stroke-width: 1;
     filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
     fill: transparent;
+    fill: var(--hover-color);
   }
 
   & .borderEffect {
-    stroke: var(--main-color);
+    stroke: white;
     stroke-width: 2;
     stroke-dasharray: 150 600;
     stroke-dashoffset: 150;
@@ -81,6 +74,7 @@ const CustomButtonRoot = styled(ButtonRoot)(
     & .bg {
       fill: var(--active-color);
       transition: fill 300ms ease-out;
+      color: white;
     }
   }
 
@@ -95,7 +89,7 @@ const CustomButtonRoot = styled(ButtonRoot)(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--main-color);
+      color: white;
       text-transform: uppercase;
     }
 
@@ -112,6 +106,6 @@ const SvgButton = React.forwardRef(function SvgButton(
   return <ButtonUnstyled {...props} component={CustomButtonRoot} ref={ref} />;
 });
 
-export default function Button({ name }: { name: any }) {
-  return <SvgButton>{name}</SvgButton>;
+export default function Button({ name, func }: { name: any; func: any }) {
+  return <SvgButton onClick={func}>{name}</SvgButton>;
 }

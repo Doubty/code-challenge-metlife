@@ -3,10 +3,9 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ICharacter } from "../../types";
-import ButtonCustom from "../Button";
+import ModalCharacter from "../ModalCharacter";
 
 export default function CardCharacter({
   character,
@@ -17,12 +16,17 @@ export default function CardCharacter({
     <Card sx={{ maxWidth: 350 }}>
       <CardMedia
         component="img"
-        height="600"
+        height="500"
         image={character.img}
         alt={character.name}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography
+          sx={{ textTransform: "uppercase" }}
+          gutterBottom
+          variant="h6"
+          component="div"
+        >
           {character.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -31,7 +35,7 @@ export default function CardCharacter({
         </Typography>
       </CardContent>
       <CardActions>
-        <ButtonCustom name="Informações" />
+        <ModalCharacter character={character} />
       </CardActions>
     </Card>
   );

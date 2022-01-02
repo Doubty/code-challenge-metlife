@@ -1,0 +1,13 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  background-image: url("./assets//images//background.jpg");
+  background-repeat: repeat;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: scroll;
+}
+
+* {
+  box-sizing: border-box;
+}
