@@ -1,6 +1,6 @@
 .headerContent {
   max-width: 100%;
-  background-color: #2ecc71 !important;
+  background-color: #1abc9c;
   text-align: center;
   padding: 25px;
   color: white;
@@ -8,6 +8,11 @@
   margin-bottom: 5rem;
   cursor: pointer;
   line-height: 1.4;
-  text-overflow: ellipsis;
-  overflow-x: hidden;
+  font-family: "Roboto";
+}
+
+@media (max-width: 900px) {
+  .headerContent {
+    font-size: 1.8em;
+  }
 }

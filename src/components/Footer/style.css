@@ -5,10 +5,13 @@
   padding: 40px;
   color: white;
   font-size: 1.5em;
-  margin-top: 5rem;
   line-height: 1.4;
-  text-overflow: ellipsis;
-  overflow-x: hidden;
+  font-family: "Roboto";
+}
+
+#content {
+  min-height: calc(10vh - 20px - 20px);
+  margin-top: 38vh;
 }
 
 .FooterContent a {
@@ -19,4 +22,10 @@
 .FooterContent a:hover {
   text-decoration: none;
   color: #2ecc709c;
+}
+
+@media (max-width: 900px) {
+  .FooterContent {
+    font-size: 1.1em;
+  }
 }

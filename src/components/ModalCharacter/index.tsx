@@ -18,6 +18,8 @@ import Swal from 'sweetalert2'
 
 
 import { ICharacter } from "../../types";
+import { characterSlice } from "../../store/reducers/characters/CharacterSlice";
+import { useAppDispatch } from "../../hooks/redux";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -48,10 +50,14 @@ export interface DialogTitleProps {
 
 export default function CustomizedDialogs({
   character,
+  type
 }: {
   character: ICharacter;
+  type: string
 }) {
   const [open, setOpen] = React.useState(false);
+  const { adicionarFavorito, removerFavoritos } = characterSlice.actions;
+  const dispatch = useAppDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,6 +67,8 @@ export default function CustomizedDialogs({
   };
 
   function addToFavoriteList() {
+
+    dispatch(adicionarFavorito(character))
 
     handleClose();
 
@@ -74,6 +82,29 @@ export default function CustomizedDialogs({
       confirmButtonAriaLabel: 'Confirmar',
       confirmButtonColor: '#2ecc71',
     })
+
+
+
+  }
+
+  function removeFromFavoriteList() {
+
+    dispatch(removerFavoritos(character))
+
+    handleClose();
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Favoritos',
+      text: 'Removido dos favoritos com sucesso',
+      focusConfirm: true,
+      confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Confirmar',
+      confirmButtonAriaLabel: 'Confirmar',
+      confirmButtonColor: '#2ecc71',
+    })
+
+
 
   }
 
@@ -97,7 +128,7 @@ export default function CustomizedDialogs({
               alt={character.name}
             />
 
-            <CardContent>
+            <CardContent style={{ overflow: "scroll" }}>
               <Typography
                 component="div"
                 variant="h4"
@@ -149,7 +180,7 @@ export default function CustomizedDialogs({
           </Card>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="success" startIcon={<Star />} onClick={addToFavoriteList} >Favoritar</Button>
+          <Button variant="contained" color="success" startIcon={<Star />} onClick={type === 'main' ? addToFavoriteList : removeFromFavoriteList} >{type === 'main' ? 'Favoritar' : 'Remover'}</Button>
           <Button variant="contained" color="inherit" onClick={handleClose}>Fechar</Button>
         </DialogActions>
       </BootstrapDialog >

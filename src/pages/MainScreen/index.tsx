@@ -19,17 +19,21 @@ function MainScreen() {
   const { count } = useAppSelector((state) => state.characterReducer);
   const { increment } = characterSlice.actions;
   const dispatch = useAppDispatch();
-  const { characters, isLoading, error } = useAppSelector(
+  const { favoriteCharacters, characters, isLoading, error } = useAppSelector(
     (state) => state.characterReducer
   );
 
   useEffect(() => {
-    dispatch(fetchCharacters());
-  }, []);
+
+    if (favoriteCharacters.length === 0) {
+      dispatch(fetchCharacters());
+    }
+
+  }, [favoriteCharacters]);
 
   return (
     <>
-      <Header />
+      <Header name="Pyschonauts - tela principal" />
       <Container sx={{ minWidth: "100%" }}>
 
         <Grid item xs={12} md={12} sx={{ marginTop: "2rem" }}>
@@ -44,15 +48,6 @@ function MainScreen() {
             </IconButton>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={12} className="inputSearchContainer">
-          <p>testando</p>
-          <h1> {count} </h1>
-          <Button variant="contained" onClick={() => dispatch(increment(1))}>
-            incrementar
-          </Button>
-
-          <br />
-        </Grid>
 
         <Grid container xs={12} md={12}>
           {isLoading && (
@@ -65,7 +60,7 @@ function MainScreen() {
           {!isLoading &&
             characters.map((character) => (
               <Grid item xs={12} md={3} sx={{ marginTop: "2rem" }} spacing={3}>
-                <CardCharacter character={character} />
+                <CardCharacter type="main" character={character} />
               </Grid>
             ))}
         </Grid>

@@ -2,10 +2,10 @@ import './style.css'
 function Footer() {
     return (
         <>
-            <header className="FooterContent">
+            <footer id='content' className="FooterContent">
 
-                <span>Desafio desenvolido by <a href='https://github.com/Doubty' target="_blank" >Antônio Galvão</a></span>
-            </header>
+                <span>Desafio desenvolvido by <a href='https://github.com/Doubty' target="_blank" >Antônio Galvão</a></span>
+            </footer>
         </>
     );
 }

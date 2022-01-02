@@ -1,0 +1,24 @@
+.ContainerLoading {
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.loadingText {
+  font-size: 3rem;
+  color: white;
+  margin: 10px;
+  line-height: 1.4;
+}
+
+.ContainerMessage {
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 960px;
+}

@@ -9,8 +9,10 @@ import ModalCharacter from "../ModalCharacter";
 
 export default function CardCharacter({
   character,
+  type
 }: {
   character: ICharacter;
+  type: string
 }) {
   return (
     <Card sx={{ maxWidth: 350 }}>
@@ -22,20 +24,16 @@ export default function CardCharacter({
       />
       <CardContent>
         <Typography
-          sx={{ textTransform: "uppercase" }}
+          sx={{ textTransform: "uppercase", textAlign: 'center' }}
           gutterBottom
           variant="h6"
           component="div"
         >
           {character.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
       </CardContent>
       <CardActions>
-        <ModalCharacter character={character} />
+        <ModalCharacter type={type} character={character} />
       </CardActions>
     </Card>
   );

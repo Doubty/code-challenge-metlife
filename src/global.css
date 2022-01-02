@@ -3,11 +3,13 @@ body {
   padding: 0px;
   background-image: url("./assets//images//background.jpg");
   background-repeat: repeat;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow-x: scroll;
+  overflow: scroll !important;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.css-bhp9pd-MuiPaper-root-MuiCard-root {
+  overflow: scroll !important;
 }

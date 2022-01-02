@@ -1,10 +1,14 @@
 import './style.css'
-function Header() {
+import { useNavigate } from 'react-router-dom';
+
+function Header({ name }: { name: string }) {
+
+    const navigate = useNavigate();
+
     return (
         <>
-            <header className="headerContent">
-
-                <span>Pyschonauts - tela principal</span>
+            <header onClick={() => name === 'Pyschonauts - tela principal' ? navigate('/favoriteList') : navigate('/')} className="headerContent">
+                <span>{name}</span>
             </header>
         </>
     );
