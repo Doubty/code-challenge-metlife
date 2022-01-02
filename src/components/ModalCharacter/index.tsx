@@ -5,8 +5,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import ButtonCustom from "../Button";
 import Card from "@mui/material/Card";
@@ -15,6 +13,8 @@ import CardMedia from "@mui/material/CardMedia";
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Star from '@mui/icons-material/Star';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import Swal from 'sweetalert2'
 
 
 import { ICharacter } from "../../types";
@@ -28,35 +28,23 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#2ecc71',
+    color: 'white',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: 'none',
+  },
+}));
+
 export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   onClose: () => void;
 }
-
-const BootstrapDialogTitle = (props: DialogTitleProps) => {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
 
 export default function CustomizedDialogs({
   character,
@@ -72,6 +60,23 @@ export default function CustomizedDialogs({
     setOpen(false);
   };
 
+  function addToFavoriteList() {
+
+    handleClose();
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Favoritos',
+      text: 'Adicionado aos favoritos com sucesso',
+      focusConfirm: true,
+      confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Confirmar',
+      confirmButtonAriaLabel: 'Confirmar',
+      confirmButtonColor: '#2ecc71',
+    })
+
+  }
+
   return (
     <div>
       <ButtonCustom name="Informações" func={handleClickOpen} />
@@ -82,12 +87,8 @@ export default function CustomizedDialogs({
         open={open}
         maxWidth="xl"
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
-          {character.name}
-        </BootstrapDialogTitle>
+
+        <DialogTitle id="scroll-dialog-title" sx={{ backgroundColor: "#2ecc71", color: "white", textTransform: "uppercase" }}>{character.name}</DialogTitle>
         <DialogContent dividers>
           <Card>
             <CardMedia
@@ -122,25 +123,37 @@ export default function CustomizedDialogs({
               </Typography>
               <ImageList sx={{ width: 500, height: 200 }} cols={5} rowHeight={100}>
                 {character.psiPowers.map((item) => (
-                  <ImageListItem key={item.img}>
-                    <img
-                      src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                      srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2`}
-                      alt={item.name}
-                      loading="lazy"
+                  <HtmlTooltip
+                    title={
+                      <>
+                        <Typography sx={{ textAlign: 'center' }} color="success">Informações</Typography>
+                        <hr />
+                        <p style={{ textAlign: 'justify', textOverflow: "ellipsis", overflow: 'hidden' }}> Nome: {item.name} <br />
+                          Descrição: {item.description}</p>
 
-                    />
-                  </ImageListItem>
+                      </>
+                    }
+                  >
+                    <ImageListItem key={item.img}>
+                      <img
+                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2`}
+                        alt={item.name}
+                        loading="lazy"
+
+                      />
+                    </ImageListItem>
+                  </HtmlTooltip>
                 ))}
               </ImageList>
             </CardContent>
           </Card>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="success" startIcon={<Star />}>Favoritar</Button>
+          <Button variant="contained" color="success" startIcon={<Star />} onClick={addToFavoriteList} >Favoritar</Button>
           <Button variant="contained" color="inherit" onClick={handleClose}>Fechar</Button>
         </DialogActions>
-      </BootstrapDialog>
-    </div>
+      </BootstrapDialog >
+    </div >
   );
 }
