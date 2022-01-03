@@ -13,39 +13,33 @@ import Footer from "../../components/Footer";
 import "./style.css";
 
 function FavoriteList() {
-
   const [search, setSearch]: [string, (search: string) => void] = useState("");
 
   const { favoriteCharacters, isLoading, error } = useAppSelector(
     (state) => state.characterReducer
   );
 
-  const handleChange = (e: { target: { value: string; }; }) => {
-
+  const handleChange = (e: { target: { value: string } }) => {
     setSearch(e.target.value);
-
   };
 
   function filterCharacters() {
-
-    if (search === '' || search === ' ') {
+    if (search === "" || search === " ") {
       return favoriteCharacters;
     } else {
       let aux = [];
 
-      aux = favoriteCharacters.filter(item => item.name.toLowerCase().match(search.toLocaleLowerCase()));
+      aux = favoriteCharacters.filter((item) =>
+        item.name.toLowerCase().match(search.toLocaleLowerCase())
+      );
       return aux;
-
     }
-
   }
-
 
   return (
     <>
       <Header name="Pyschonauts - lista de favoritos" />
       <Container sx={{ minWidth: "100%" }}>
-
         <Grid item xs={12} md={12} sx={{ marginTop: "2rem" }}>
           <Paper component="form" className="inputSearchContainer">
             <InputBase
@@ -68,13 +62,21 @@ function FavoriteList() {
             </Grid>
           )}
 
-          {favoriteCharacters.length === 0 && (
+          {filterCharacters().length === 0 && !isLoading && (
             <Grid item xs={12} md={12} className="ContainerMessage">
-
-              <h3 className="loadingText"> Nenhum personagem aqui ainda...</h3>
+              <h3 className="loadingText">
+                Nenhum personagem por aqui ainda...
+              </h3>
             </Grid>
           )}
-          {error && <h3> Ops... tivemos um problema ao carregar a listagem</h3>}
+
+          {error && (
+            <Grid item xs={12} md={12} className="ContainerMessage">
+              <h3 className="loadingText">
+                Ops... tivemos um problema ao carregar a listagem
+              </h3>
+            </Grid>
+          )}
 
           {!isLoading &&
             filterCharacters().map((character) => (
