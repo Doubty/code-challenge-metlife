@@ -24,7 +24,7 @@ export default function CardCharacter({
       />
       <CardContent>
         <Typography
-          sx={{ textTransform: "uppercase", textAlign: 'center' }}
+          sx={{ textTransform: "uppercase", textAlign: 'center', textOverflow: "ellipsis", overflow: 'hidden' }}
           gutterBottom
           variant="h6"
           component="div"

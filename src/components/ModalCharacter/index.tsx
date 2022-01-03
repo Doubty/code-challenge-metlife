@@ -103,9 +103,6 @@ export default function CustomizedDialogs({
       confirmButtonAriaLabel: 'Confirmar',
       confirmButtonColor: '#2ecc71',
     })
-
-
-
   }
 
   return (
@@ -128,7 +125,7 @@ export default function CustomizedDialogs({
               alt={character.name}
             />
 
-            <CardContent style={{ overflow: "scroll" }}>
+            <CardContent>
               <Typography
                 component="div"
                 variant="h4"
