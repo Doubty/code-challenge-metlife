@@ -73,7 +73,7 @@ function MainScreen() {
               <h3 className="loadingText"> Carregando...</h3>
             </Grid>
           )}
-          {filterCharacters().length === 0 && (
+          {filterCharacters().length === 0 && !isLoading && (
             <Grid item xs={12} md={12} className="ContainerMessage">
 
               <h3 className="loadingText"> Personagem não encontrado :(</h3>
