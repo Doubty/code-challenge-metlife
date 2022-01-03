@@ -10,16 +10,20 @@ import ButtonCustom from "../Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import Star from '@mui/icons-material/Star';
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
-import Swal from 'sweetalert2'
-
-
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import Star from "@mui/icons-material/Star";
+import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
+import Swal from "sweetalert2";
 import { ICharacter } from "../../types";
 import { characterSlice } from "../../store/reducers/characters/CharacterSlice";
 import { useAppDispatch } from "../../hooks/redux";
+
+export interface DialogTitleProps {
+  id: string;
+  children?: React.ReactNode;
+  onClose: () => void;
+}
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -34,26 +38,20 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: '#2ecc71',
-    color: 'white',
+    backgroundColor: "#2ecc71",
+    color: "white",
     maxWidth: 220,
     fontSize: theme.typography.pxToRem(12),
-    border: 'none',
+    border: "none",
   },
 }));
 
-export interface DialogTitleProps {
-  id: string;
-  children?: React.ReactNode;
-  onClose: () => void;
-}
-
 export default function CustomizedDialogs({
   character,
-  type
+  type,
 }: {
   character: ICharacter;
-  type: string
+  type: string;
 }) {
   const [open, setOpen] = React.useState(false);
   const { adicionarFavorito, removerFavoritos } = characterSlice.actions;
@@ -67,42 +65,35 @@ export default function CustomizedDialogs({
   };
 
   function addToFavoriteList() {
-
-    dispatch(adicionarFavorito(character))
+    dispatch(adicionarFavorito(character));
 
     handleClose();
 
     Swal.fire({
-      icon: 'success',
-      title: 'Favoritos',
-      text: 'Adicionado aos favoritos com sucesso',
+      icon: "success",
+      title: "Favoritos",
+      text: "Adicionado aos favoritos com sucesso",
       focusConfirm: true,
-      confirmButtonText:
-        '<i class="fa fa-thumbs-up"></i> Confirmar',
-      confirmButtonAriaLabel: 'Confirmar',
-      confirmButtonColor: '#2ecc71',
-    })
-
-
-
+      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirmar',
+      confirmButtonAriaLabel: "Confirmar",
+      confirmButtonColor: "#2ecc71",
+    });
   }
 
   function removeFromFavoriteList() {
-
-    dispatch(removerFavoritos(character))
+    dispatch(removerFavoritos(character));
 
     handleClose();
 
     Swal.fire({
-      icon: 'success',
-      title: 'Favoritos',
-      text: 'Removido dos favoritos com sucesso',
+      icon: "success",
+      title: "Favoritos",
+      text: "Removido dos favoritos com sucesso",
       focusConfirm: true,
-      confirmButtonText:
-        '<i class="fa fa-thumbs-up"></i> Confirmar',
-      confirmButtonAriaLabel: 'Confirmar',
-      confirmButtonColor: '#2ecc71',
-    })
+      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirmar',
+      confirmButtonAriaLabel: "Confirmar",
+      confirmButtonColor: "#2ecc71",
+    });
   }
 
   return (
@@ -114,13 +105,21 @@ export default function CustomizedDialogs({
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-
-        <DialogTitle id="scroll-dialog-title" sx={{ backgroundColor: "#2ecc71", color: "white", textTransform: "uppercase" }}>{character.name}</DialogTitle>
+        <DialogTitle
+          id="scroll-dialog-title"
+          sx={{
+            backgroundColor: "#2ecc71",
+            color: "white",
+            textTransform: "uppercase",
+          }}
+        >
+          {character.name}
+        </DialogTitle>
         <DialogContent dividers>
           <Card>
             <CardMedia
               component="img"
-              sx={{ width: 350, maxHeight: '50%', margin: "0 auto" }}
+              sx={{ width: 350, maxHeight: "50%", margin: "0 auto" }}
               image={character.img}
               alt={character.name}
             />
@@ -143,21 +142,42 @@ export default function CustomizedDialogs({
               <Typography
                 component="div"
                 variant="h4"
-                sx={{ textAlign: "center", marginBottom: "1rem", marginTop: '1rem' }}
+                sx={{
+                  textAlign: "center",
+                  marginBottom: "1rem",
+                  marginTop: "1rem",
+                }}
               >
                 Poderes
                 <hr />
               </Typography>
-              <ImageList sx={{ width: 500, height: 200 }} cols={5} rowHeight={100}>
+              <ImageList
+                sx={{ width: 500, height: 200 }}
+                cols={5}
+                rowHeight={100}
+              >
                 {character.psiPowers.map((item) => (
                   <HtmlTooltip
                     title={
                       <>
-                        <Typography sx={{ textAlign: 'center' }} color="success">Informações</Typography>
+                        <Typography
+                          sx={{ textAlign: "center" }}
+                          color="success"
+                        >
+                          Informações
+                        </Typography>
                         <hr />
-                        <p style={{ textAlign: 'justify', textOverflow: "ellipsis", overflow: 'hidden' }}> Nome: {item.name} <br />
-                          Descrição: {item.description}</p>
-
+                        <p
+                          style={{
+                            textAlign: "justify",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {" "}
+                          Nome: {item.name} <br />
+                          Descrição: {item.description}
+                        </p>
                       </>
                     }
                   >
@@ -167,7 +187,6 @@ export default function CustomizedDialogs({
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2`}
                         alt={item.name}
                         loading="lazy"
-
                       />
                     </ImageListItem>
                   </HtmlTooltip>
@@ -177,10 +196,21 @@ export default function CustomizedDialogs({
           </Card>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="success" startIcon={<Star />} onClick={type === 'main' ? addToFavoriteList : removeFromFavoriteList} >{type === 'main' ? 'Favoritar' : 'Remover'}</Button>
-          <Button variant="contained" color="inherit" onClick={handleClose}>Fechar</Button>
+          <Button
+            variant="contained"
+            color="success"
+            startIcon={<Star />}
+            onClick={
+              type === "main" ? addToFavoriteList : removeFromFavoriteList
+            }
+          >
+            {type === "main" ? "Favoritar" : "Remover"}
+          </Button>
+          <Button variant="contained" color="inherit" onClick={handleClose}>
+            Fechar
+          </Button>
         </DialogActions>
-      </BootstrapDialog >
-    </div >
+      </BootstrapDialog>
+    </div>
   );
 }

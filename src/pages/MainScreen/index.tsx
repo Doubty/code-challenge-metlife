@@ -59,8 +59,6 @@ function MainScreen() {
               placeholder="Pesquisar personagem"
               inputProps={{ "aria-label": "Pesquisar personagem" }}
               onChange={handleChange}
-              
-
             />
             <IconButton type="submit" sx={{ p: "10px" }} aria-label="pesquisar">
               <SearchIcon />
@@ -81,7 +79,9 @@ function MainScreen() {
               <h3 className="loadingText"> Personagem não encontrado :(</h3>
             </Grid>
           )}
-          {error && <h3> Ops... tivemos um problema ao carregar a listagem</h3>}
+          {error && <Grid item xs={12} md={12} className="ContainerMessage">
+            <h3 className="loadingText"> Ops... tivemos um problema ao carregar a listagem</h3>
+          </Grid>}
           {!isLoading &&
             filterCharacters().map((character) => (
               <Grid item xs={12} md={3} sx={{ marginTop: "2rem" }} spacing={3}>
