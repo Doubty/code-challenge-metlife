@@ -11,12 +11,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import CardCharacter from "../../components/CardCharacter";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { ICharacter } from '../../types'
 import "./style.css";
 
 function MainScreen() {
   const [search, setSearch]: [string, (search: string) => void] = useState("");
-  const [filteredList, setFilteredList] = useState<ICharacter[]>([]);
   const dispatch = useAppDispatch();
   const { favoriteCharacters, characters, isLoading, error } = useAppSelector(
     (state) => state.characterReducer
@@ -26,13 +24,11 @@ function MainScreen() {
 
     if (favoriteCharacters.length === 0) {
       dispatch(fetchCharacters());
-      setFilteredList(characters);
     }
 
   }, [dispatch, favoriteCharacters]);
 
   const handleChange = (e: { target: { value: string; }; }) => {
-    console.log(e.target.value);
     setSearch(e.target.value);
 
   };

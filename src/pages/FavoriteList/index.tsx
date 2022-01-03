@@ -1,7 +1,6 @@
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { characterSlice } from "../../store/reducers/characters/CharacterSlice";
+import { useState } from "react";
+import { useAppSelector } from "../../hooks/redux";
 import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -14,16 +13,36 @@ import Footer from "../../components/Footer";
 import "./style.css";
 
 
+
 function FavoriteList() {
-  const { removerFavoritos } = characterSlice.actions;
-  const dispatch = useAppDispatch();
+
+  const [search, setSearch]: [string, (search: string) => void] = useState("");
+
   const { favoriteCharacters, isLoading, error } = useAppSelector(
     (state) => state.characterReducer
   );
 
+  const handleChange = (e: { target: { value: string; }; }) => {
+
+    setSearch(e.target.value);
+
+  };
+
+  function filterCharacters() {
+
+    if (search === '' || search === ' ') {
+      return favoriteCharacters;
+    } else {
+      let aux = [];
+
+      aux = favoriteCharacters.filter(item => item.name.toLowerCase().match(search.toLocaleLowerCase()));
+      return aux;
+
+    }
+
+  }
 
 
-  console.log({ msg: "teste", obj: favoriteCharacters })
   return (
     <>
       <Header name="Pyschonauts - lista de favoritos" />
@@ -35,6 +54,7 @@ function FavoriteList() {
               sx={{ ml: 1, flex: 1 }}
               placeholder="Pesquisar personagem"
               inputProps={{ "aria-label": "Pesquisar personagem" }}
+              onChange={handleChange}
             />
             <IconButton type="submit" sx={{ p: "10px" }} aria-label="pesquisar">
               <SearchIcon />
@@ -59,7 +79,7 @@ function FavoriteList() {
           {error && <h3> Ops... tivemos um problema ao carregar a listagem</h3>}
 
           {!isLoading &&
-            favoriteCharacters.map((character) => (
+            filterCharacters().map((character) => (
               <Grid item xs={12} md={3} sx={{ marginTop: "2rem" }} spacing={3}>
                 <CardCharacter type="favorite" character={character} />
               </Grid>
